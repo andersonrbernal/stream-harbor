@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MediaCategory>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Country>
  */
-class MediaCategoryFactory extends Factory
+class CountryFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +18,8 @@ class MediaCategoryFactory extends Factory
     {
         return [
             'id' => fake()->unique()->randomNumber(),
-            'name' => fake()->word()
+            'name' => fake()->country(),
+            'country_code' => fake()->countryISOAlpha3(),
         ];
     }
 }
