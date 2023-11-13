@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\MediaCategory;
+use App\Models\Music;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class MediaCategorySeeder extends Seeder
+class MusicSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        MediaCategory::factory(5)->create();
+        Music::factory()->count(30)->create();
     }
 }
