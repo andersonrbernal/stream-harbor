@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "title"=> "Stream Harbor",
     "form_title" => "Create Account",
     "attributes" => [
         "name" => "name",
