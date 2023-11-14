@@ -18,7 +18,7 @@
     @stack('styles')
 </head>
 
-<body {{ $attributes }}>
+<body {{ $attributes }} x-cloak x-data="{ darkMode: $persist(false) }" :class="{ 'dark': darkMode === true }" class="antialiased">
     {{ $slot }}
 
     <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
