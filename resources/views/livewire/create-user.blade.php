@@ -1,7 +1,9 @@
 <form wire:submit.prevent='save'
-    class="p-8 space-y-4 md:space-y-6 border border-gray-200 rounded-lg shadow bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+    class="p-8 space-y-4 md:space-y-6 border border-gray-200 rounded-lg shadow bg-gray-100 dark:bg-gray-800 dark:border-gray-700">
 
-    <h1 class="font-semibold text-xl">{{ __('pages/auth/register.form_title') }}</h1>
+    <h1 class="font-semibold text-xl text-gray-500 dark:text-gray-400">
+        {{ __('pages/auth/register.form_title') }}
+    </h1>
 
     @if (session()->has('message'))
         <div class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
@@ -29,7 +31,7 @@
             :error="$errors->has('form.name')" />
 
         @error('form.name')
-            <p class="mt-2 text-sm text-error-600 dark:text-error-500">{{ $message }}</p>
+            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
         @enderror
     </div>
 
@@ -42,7 +44,7 @@
             :error="$errors->has('form.email')" />
 
         @error('form.email')
-            <p class="mt-2 text-sm text-error-600 dark:text-error-500">{{ $message }}</p>
+            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
         @enderror
     </div>
 
@@ -55,7 +57,7 @@
             type='password' :error="$errors->has('form.password')" />
 
         @error('form.password')
-            <p class="mt-2 text-sm text-error-600 dark:text-error-500">{{ $message }}</p>
+            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
         @enderror
     </div>
 
@@ -68,7 +70,7 @@
             :error="$errors->has('form.password_confirmation')" :placeholder="__('pages/auth/register.password_confirmation_input.placeholder')" />
 
         @error('form.password_confirmation')
-            <p class="mt-2 text-sm text-error-600 dark:text-error-500">{{ $message }}</p>
+            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
         @enderror
     </div>
 
@@ -90,7 +92,7 @@
         </x-flowbite.select>
 
         @error('form.country_id')
-            <p class="mt-2 text-sm text-error-600 dark:text-error-500">{{ $message }}</p>
+            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
         @enderror
     </div>
 

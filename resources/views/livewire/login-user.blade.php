@@ -1,10 +1,12 @@
 <form wire:submit.prevent='login'
-    class="p-8 space-y-4 md:space-y-6 border border-gray-200 rounded-lg shadow bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+    class="p-8 space-y-4 md:space-y-6 border border-gray-200 rounded-lg shadow bg-gray-100 dark:bg-gray-800 dark:border-gray-700">
 
-    <h1 class="font-semibold text-xl">{{ __('pages/auth/login.form_title') }}</h1>
+    <h1 class="font-semibold text-xl text-gray-500 dark:text-gray-400">
+        {{ __('pages/auth/login.form_title') }}
+    </h1>
 
     @if (session()->has('message'))
-        <div class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+        <div class="flex items-center p-4 mb-4 text-sm text-error-800 rounded-lg bg-red-50 dark:bg-error-900 dark:text-red-400"
             role="alert">
             <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor" viewBox="0 0 20 20">
@@ -26,10 +28,6 @@
         </x-flowbite.input-label>
 
         <x-flowbite.input wire:model='credentials.email' :id="__('pages/auth/login.attributes.email')" :placeholder="__('pages/auth/login.email_input.placeholder')" :error="$errors->has('email')" />
-
-        @error('credentials.email')
-            <p class="mt-2 text-sm text-error-600 dark:text-error-500">{{ $message }}</p>
-        @enderror
     </div>
 
     <div>
@@ -38,10 +36,6 @@
         </x-flowbite.input-label>
 
         <x-flowbite.input wire:model='credentials.password' :id="__('pages/auth/login.attributes.password')" :placeholder="__('pages/auth/login.password_input.placeholder')" type='password' />
-
-        @error('credentials.password')
-            <p class="mt-2 text-sm text-error-600 dark:text-error-500">{{ $message }}</p>
-        @enderror
     </div>
 
     <x-flowbite.button wire:loading.attr='disabled'>
