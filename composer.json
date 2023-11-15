@@ -15,7 +15,8 @@
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.1",
         "mkocansey/bladewind": "^2.3",
-        "owenvoke/blade-fontawesome": "^2.4"
+        "owenvoke/blade-fontawesome": "^2.4",
+        "urodoz/truncate-html": "@stable"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
