@@ -1,5 +1,5 @@
 <button @click="darkMode=!darkMode" type="button"
-    class="relative inline-flex flex-shrink-0 h-6 mr-5 transition-colors duration-200 ease-in-out border-2 border-transparent rounded-full cursor-pointer bg-primary-400 dark:bg-primary-700 w-11 focus:outline-none focus:ring-2 focus:ring-neutral-700 focus:ring-offset-2"
+    class="relative inline-flex flex-shrink-0 h-6 mr-5 transition-colors duration-200 ease-in-out border-2 border-transparent rounded-full cursor-pointer bg-gray-400 dark:bg-gray-700 w-11 focus:outline-none focus:ring-2 focus:ring-neutral-700 focus:ring-offset-2"
     role="switch" aria-checked="false">
     <span class="sr-only">Use setting</span>
     <span
