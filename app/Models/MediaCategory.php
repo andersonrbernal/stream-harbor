@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MediaCategory extends Model
 {
@@ -17,4 +18,9 @@ class MediaCategory extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function videos(): HasMany
+    {
+        return $this->hasMany(Video::class);
+    }
 }
