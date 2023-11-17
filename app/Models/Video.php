@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Video extends Model
@@ -11,10 +13,23 @@ class Video extends Model
     use HasFactory;
 
     /**
-     * Get the mediaCategory associated with the country.
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
      */
-    public function mediaCategory(): HasMany
+    protected $fillable = [
+        'title',
+        'description',
+        'video_url',
+        'thumb_url',
+        'media_category_id',
+    ];
+
+    /**
+     * Get the media category associated with the video.
+     */
+    public function mediaCategory(): belongsTo
     {
-        return $this->hasMany(MediaCategory::class);
+        return $this->belongsTo(MediaCategory::class);
     }
 }
