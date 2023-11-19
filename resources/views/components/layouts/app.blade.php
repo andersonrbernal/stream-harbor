@@ -19,6 +19,8 @@
 </head>
 
 <body {{ $attributes }} x-cloak x-data="{ darkMode: $persist(false) }" :class="{ 'dark': darkMode === true }" class="antialiased">
+    <x-navigation-bar />
+
     {{ $slot }}
 
     <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
