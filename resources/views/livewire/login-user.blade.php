@@ -40,7 +40,7 @@
 
     <x-flowbite.button wire:loading.attr='disabled'>
         <span wire:loading.remove> {{ __('pages/auth/login.form_button') }} </span>
-        <x-css-spinner wire:loading class="animate-spin" />
+        <i wire:loading class="fa-solid fa-spinner animate-spin text-lg text-primary-200"></i>
     </x-flowbite.button>
 
     <p class="text-sm font-light text-gray-500 dark:text-gray-400">
