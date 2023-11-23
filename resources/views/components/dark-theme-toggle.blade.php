@@ -7,12 +7,12 @@
         <span
             class="absolute inset-0 flex items-center justify-center w-full h-full transition-opacity duration-500 ease-in opacity-100 dark:opacity-0 dark:duration-100 dark:ease-out"
             aria-hidden="true">
-            <x-fas-sun class="h-4 w-4 text-gray-700" />
+            <i class="fa-regular fa-moon"></i>
         </span>
         <span
             class="absolute inset-0 flex items-center justify-center w-full h-full transition-opacity duration-100 ease-out opacity-0 dark:opacity-100 dark:duration-200 dark:ease-in"
             aria-hidden="true">
-            <x-fas-moon class="h-4 w-4 text-gray-700" />
+            <i class="fa-regular fa-sun"></i>
         </span>
     </span>
 </button>

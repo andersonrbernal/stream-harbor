@@ -98,7 +98,7 @@
 
     <x-flowbite.button wire:submit.prevent='save' wire:loading.attr='disabled'>
         <span wire:loading.remove wire:target='save'> {{ __('pages/auth/register.form_button') }} </span>
-        <x-css-spinner wire:loading wire:target='save' class="animate-spin" />
+        <i wire:loading wire:target='save' class="fa-solid fa-spinner animate-spin text-lg text-primary-200"></i>
     </x-flowbite.button>
 
     <p class="text-sm font-light text-gray-500 dark:text-gray-400">
