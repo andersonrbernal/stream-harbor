@@ -30,9 +30,9 @@ class CreateUser extends Component
         $this->countries = $this->countryRepository->findAll();
     }
 
-    public function updated()
+    public function updated($property)
     {
-        $this->validate();
+        $this->validateOnly($property);
     }
 
     public function save()
