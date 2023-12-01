@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             AuthorSeeder::class,
             MusicSeeder::class,
             UserSeeder::class,
+            InteractionSeeder::class,
         ]);
     }
 }
