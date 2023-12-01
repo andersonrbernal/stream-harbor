@@ -88,4 +88,84 @@ class Video extends Model
             ->where('viewed', true)
             ->count();
     }
+
+    /**
+     * Checks if the video is liked by the user.
+     *
+     * @param int $id The user id.
+     * @return bool True if the video is liked by the user, false otherwise.
+     */
+    public function isLikedByUser(int $id): bool
+    {
+        return $this->interactions()
+            ->where('user_id', $id)
+            ->where('liked', true)
+            ->exists();
+    }
+
+    /**
+     * Checks if the video is viewed by the user.
+     *
+     * @param int $id The user id.
+     * @return bool True if the video is viewed by the user, false otherwise.
+     */
+    public function isViewedByUser(int $id): bool
+    {
+        return $this->interactions()
+            ->where('user_id', $id)
+            ->where('viewed', true)
+            ->exists();
+    }
+
+    /**
+     * Records a like interaction for the video.
+     *
+     * @return void
+     */
+    public function like(int $id): void
+    {
+        $this->interactions()->create([
+            'user_id' => $id,
+            'liked' => true,
+        ]);
+    }
+
+    /**
+     * Records a dislike interaction for the video.
+     *
+     * @return void
+     */
+    public function dislike(int $id): void
+    {
+        $this->interactions()
+            ->where('user_id', $id)
+            ->where('liked', true)
+            ->delete();
+    }
+
+    /**
+     * Records a view interaction for the video.
+     *
+     * @return void
+     */
+    public function view(int $id): void
+    {
+        $this->interactions()->create([
+            'user_id' => $id,
+            'viewed' => true,
+        ]);
+    }
+
+    /**
+     * Removes the view interaction for the video.
+     *
+     * @return void
+     */
+    public function unview(int $id): void
+    {
+        $this->interactions()
+            ->where('user_id', $id)
+            ->where('viewed', true)
+            ->delete();
+    }
 }
