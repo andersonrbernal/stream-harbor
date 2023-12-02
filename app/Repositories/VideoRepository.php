@@ -26,7 +26,7 @@ class VideoRepository implements VideoRepositoryInterface
 
     public function findById($id)
     {
-        return $this->video->find($id)->first();
+        return $this->video->where('id', $id)->first();
     }
 
     public function paginate($perPage = 15, $columns = ['*'])
@@ -41,11 +41,11 @@ class VideoRepository implements VideoRepositoryInterface
 
     public function update($id, array $data)
     {
-        return $this->video->find($id)->update($data);
+        return $this->video->where('id', $id)->update($data);
     }
 
     public function delete($id)
     {
-        return $this->video->find($id)->delete();
+        return $this->video->where('id', $id)->delete();
     }
 }
