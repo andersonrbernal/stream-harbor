@@ -33,6 +33,10 @@ class CreateUser extends Component
     public function updated($property)
     {
         $this->validateOnly($property);
+
+        if (filled($this->form->password) && filled($this->form->password_confirmation)) {
+            $this->validateOnly('password_confirmation');
+        }
     }
 
     public function save()
