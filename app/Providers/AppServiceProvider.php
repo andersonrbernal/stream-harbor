@@ -12,6 +12,7 @@ use App\Repositories\Interfaces\VideoRepositoryInterface;
 use App\Repositories\UserRepository;
 use App\Repositories\VideoRepository;
 use Illuminate\Support\ServiceProvider;
+use Urodoz\Truncate\TruncateService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(VideoRepositoryInterface::class, function () {
             $video = new Video();
             return new VideoRepository($video);
+        });
+
+        $this->app->bind(TruncateService::class, function () {
+            return new TruncateService();
         });
     }
 
