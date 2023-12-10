@@ -30,4 +30,20 @@ class InteractionFactory extends Factory
             },
         ];
     }
+
+    /**
+     * Create a mock interaction instance with random attributes.
+     *
+     * @return static
+     */
+    public function mock(): static
+    {
+        return $this->state([
+            'id' => fake()->unique()->randomNumber(),
+            'liked' => fake()->randomElement([true, false]),
+            'viewed' => fake()->randomElement([true, false]),
+            'user_id' => fake()->unique()->randomNumber(),
+            'video_id' => fake()->unique()->randomNumber(),
+        ]);
+    }
 }
