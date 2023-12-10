@@ -32,4 +32,21 @@ class VideoFactory extends Factory
             }
         ];
     }
+
+    /**
+     * Create a mock user instance with random attributes.
+     *
+     * @return static
+     */
+    public function mock(): static
+    {
+        return $this->state([
+            'id' => fake()->unique()->randomNumber(),
+            'title' => fake()->title(),
+            'description' => fake()->realText(),
+            'video_url' => $this->faker->youtubeUri(),
+            'thumb_url' => fake()->imageUrl(),
+            'media_category_id' => fake()->unique()->randomNumber(),
+        ]);
+    }
 }
