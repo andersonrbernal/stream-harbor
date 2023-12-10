@@ -22,4 +22,18 @@ class AuthorFactory extends Factory
             'description' => fake()->text(),
         ];
     }
+
+    /**
+     * Create a mock author instance with random attributes.
+     *
+     * @return static
+     */
+    public function mock(): static
+    {
+        return $this->state([
+            'id' => fake()->unique()->randomNumber(),
+            'name' => fake()->name(),
+            'description' => fake()->text(),
+        ]);
+    }
 }
