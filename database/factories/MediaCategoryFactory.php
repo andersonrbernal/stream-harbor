@@ -21,4 +21,15 @@ class MediaCategoryFactory extends Factory
             'name' => fake()->word()
         ];
     }
+
+    /**
+     * Create a mock media category instance with random attributes.
+     */
+    public function mock(): static
+    {
+        return $this->state([
+            'id' => fake()->unique()->randomNumber(),
+            'name' => fake()->word()
+        ]);
+    }
 }
