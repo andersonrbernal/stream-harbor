@@ -27,4 +27,20 @@ class MusicFactory extends Factory
             },
         ];
     }
+
+    /**
+     * Create a mock music instance with random attributes.
+     *
+     * @return static
+     */
+    public function mock(): static
+    {
+        return $this->state([
+            'id' => fake()->unique()->randomNumber(),
+            "title" => fake()->title(),
+            "description" => fake()->text(),
+            "music_url" => fake()->url(),
+            'author_id' => fake()->unique()->randomNumber(),
+        ]);
+    }
 }
