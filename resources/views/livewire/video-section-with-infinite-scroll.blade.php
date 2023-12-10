@@ -3,10 +3,18 @@
         {{ __('pages/home/index.home.index.trending_videos') }}
     </h2>
 
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mb-5">
+    <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mb-5">
         @foreach ($videos as $video)
-            <livewire:video-card :id="$video->id" wire:key="{{ $video->id }}" lazy />
+            <li>
+                <livewire:video-card :id="$video->id" wire:key="{{ $video->id }}" lazy />
+            </li>
         @endforeach
-    </div>
+    </ul>
     <div x-intersect='$wire.loadMore()'></div>
+    <div class="mx-auto flex justify-center">
+        <span wire:loading>
+            <i class="fa-solid fa-circle-notch text-2xl text-primary animate-spin"></i>
+            <span class="sr-only">{{ __('states.loading') }}</span>
+        </span>
+    </div>
 </div>
