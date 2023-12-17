@@ -40,6 +40,8 @@ class VideoFactory extends Factory
      */
     public function mock(): static
     {
+        $this->faker->addProvider(new Youtube($this->faker));
+
         return $this->state([
             'id' => fake()->unique()->randomNumber(),
             'title' => fake()->title(),
