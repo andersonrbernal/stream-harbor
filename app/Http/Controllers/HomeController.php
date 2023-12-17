@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
+    const CACHE_TIME = 60;
     protected VideoRepositoryInterface $videoRepository;
 
     /**
@@ -28,32 +29,52 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('pages.home.index', ['title' => 'Home', 'video' => $this->getTrendingVideo()]);
+        return view('pages.home.index', [
+            'title' => 'Home',
+            'trendingVideo' => $this->getTrendingVideo(),
+            'trendingVideos' => $this->getTrendingVideos(),
+            'mostLikedVideos' => $this->getMostLikedVideosWithPagination(),
+            'mostViewedVideos' => $this->getMostViewedVideosWithPagination(),
+        ]);
     }
 
     /**
-     * Get the trending video.
+     * Retrieves the trending video.
      *
-     * @return \App\Models\Video
+     * @return mixed The trending video.
      */
     private function getTrendingVideo()
     {
-        return Cache::remember('trending_video', 3600, fn () => $this->getTrendingVideoCallback());
+        return Cache::remember('trending_video', self::CACHE_TIME, fn () => $this->videoRepository->getTrendingVideo());
     }
 
     /**
-     * Get the trending video callback.
+     * Retrieves the most liked videos with pagination.
      *
-     * @return \App\Models\Video
+     * @return mixed The most liked videos with pagination.
      */
-    private function getTrendingVideoCallback()
+    private function getMostLikedVideosWithPagination()
     {
-        return Video::withCount('interactions as total_views')
-            ->withCount(['interactions as total_likes' => function ($query) {
-                $query->where('liked', true);
-            }])
-            ->orderByDesc('total_views')
-            ->orderByDesc('total_likes')
-            ->first();
+        return Cache::remember('most_liked_videos', self::CACHE_TIME, fn () => $this->videoRepository->getMostLikedVideosWithPagination());
+    }
+
+    /**
+     * Retrieves the most viewed videos with pagination.
+     *
+     * @return mixed The most viewed videos with pagination.
+     */
+    private function getMostViewedVideosWithPagination()
+    {
+        return Cache::remember('most_viewed_videos', self::CACHE_TIME, fn () => $this->videoRepository->getMostViewedVideosWithPagination());
+    }
+
+    /**
+     * Retrieves the trending videos.
+     *
+     * @return mixed The trending videos.
+     */
+    private function getTrendingVideos()
+    {
+        return Cache::remember('trending_videos', self::CACHE_TIME, fn () => $this->videoRepository->getTrendingVideos());
     }
 }

@@ -30,7 +30,7 @@
         </div>
 
         <p class="text-gray-50 font-light mt-4 sm:max-w-md">
-            {{ $video->description ?? __('components/livewire/trending-video-player.no_description') }}
+            {{ $description ?? __('components/livewire/trending-video-player.no_description') }}
         </p>
 
         <x-flowbite.button-link :href="route('videos.show', ['id' => $video->id, 'locale' => app()->getLocale()])" :hreflang="app()->getLocale()" class="inline-block w-fit mx-auto mt-4">

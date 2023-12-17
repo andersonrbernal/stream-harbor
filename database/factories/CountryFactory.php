@@ -22,4 +22,18 @@ class CountryFactory extends Factory
             'country_code' => fake()->countryISOAlpha3(),
         ];
     }
+
+    /**
+     * Create a mock country instance with random attributes.
+     *
+     * @return static
+     */
+    public function mock(): static
+    {
+        return $this->state([
+            'id' => fake()->unique()->randomNumber(),
+            'name' => fake()->country(),
+            'country_code' => fake()->countryISOAlpha3(),
+        ]);
+    }
 }

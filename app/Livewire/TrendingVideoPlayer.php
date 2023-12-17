@@ -3,8 +3,8 @@
 namespace App\Livewire;
 
 use App\Models\Video;
-use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
+use Urodoz\Truncate\TruncateService;
 
 /**
  * Class TrendingVideoPlayer
@@ -13,7 +13,8 @@ use Livewire\Component;
  */
 class TrendingVideoPlayer extends Component
 {
-    public Video $video;
+    protected TruncateService $truncateService;
+    protected Video $video;
 
     /**
      * Render the component.
@@ -22,7 +23,20 @@ class TrendingVideoPlayer extends Component
      */
     public function render()
     {
-        return view('livewire.trending-video-player');
+        return view('livewire.trending-video-player', [
+            'video' => $this->video,
+            'description' => $this->truncateService->truncate($this->video->description, 240),
+        ]);
+    }
+
+    /**
+     * Returns the placeholder view for the TrendingVideoPlayer component.
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function placeholder()
+    {
+        return view('livewire.trending-video-player-placeholder');
     }
 
     /**
@@ -30,8 +44,9 @@ class TrendingVideoPlayer extends Component
      *
      * @return void
      */
-    public function mount(Video $video)
+    public function mount(Video $video, TruncateService $truncateService)
     {
         $this->video = $video;
+        $this->truncateService = $truncateService;
     }
 }

@@ -4,130 +4,152 @@ namespace Tests\Unit\Repositories;
 
 use App\Models\Video;
 use App\Repositories\Interfaces\VideoRepositoryInterface;
-use Faker\Provider\Youtube;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Pagination\LengthAwarePaginator;
-use PHPUnit\Framework\MockObject\MockObject;
+use Mockery;
+use Mockery\MockInterface;
 use Tests\TestCase;
 
 class VideoRepositoryTest extends TestCase
 {
     use WithFaker;
 
-    protected $video;
-    protected $videoRepository;
+    protected Video $video;
+    protected MockInterface|VideoRepositoryInterface $videoRepository;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->videoRepository = $this->createMock(VideoRepositoryInterface::class);
-
-        $this->faker->addProvider(new Youtube($this->faker));
-        $this->video = Video::factory()->makeOne([
-            'id' => $this->faker->unique()->randomNumber(),
-            'title' => $this->faker->title(),
-            'description' => $this->faker->realText(),
-            'video_url' => $this->faker->youtubeUri(),
-            'thumb_url' => $this->faker->imageUrl(),
-            'media_category_id' => $this->faker->unique()->randomNumber(),
-        ]);
+        $this->video = new Video();
+        $this->videoRepository = Mockery::mock(VideoRepositoryInterface::class);
     }
 
-    public function testFindAll()
+    protected function tearDown(): void
     {
-        $videos = [$this->video, $this->video];
+        parent::tearDown();
 
-        $this->videoRepository
-            ->expects($this->once())
-            ->method('findAll')
-            ->willReturn($videos);
-
-        $foundVideos = $this->videoRepository->findAll();
-        $this->assertEquals($videos, $foundVideos);
+        unset($this->video);
+        unset($this->videoRepository);
     }
 
-    public function testFindAllBy()
+    public function test_findAll()
     {
-        $videos = [$this->video, $this->video];
+        $videos = [$this->video->factory()->mock(), $this->video->factory()->mock()];
 
-        $this->videoRepository
-            ->expects($this->once())
-            ->method('findAllBy')
-            ->willReturn($videos);
+        $this->videoRepository->shouldReceive('findAll')->once()->andReturn($videos);
 
-        $foundVideos = $this->videoRepository->findAllBy();
-        $this->assertEquals($videos, $foundVideos);
+        $this->assertEquals($videos, $this->videoRepository->findAll());
     }
 
-    public function testFindById()
+    public function test_findAllWithColumns()
     {
-        $video = $this->video;
+        $columns = ['id', 'title'];
+        $videos = $this->video->factory()->count(2)->mock();
 
-        $this->videoRepository
-            ->expects($this->once())
-            ->method('findById')
-            ->with($video->id)
-            ->willReturn($video);
+        $filteredVideos = array_map(function ($video) use ($columns) {
+            return array_intersect_key($video, array_flip($columns));
+        }, $videos->raw());
 
-        $foundVideo = $this->videoRepository->findById($video->id);
-        $this->assertEquals($video, $foundVideo);
+        $this->videoRepository->shouldReceive('findAll')->once()->with($columns)->andReturn($filteredVideos);
+
+        $this->assertEquals($filteredVideos, $this->videoRepository->findAll($columns));
     }
 
-    public function testPaginate()
+    public function test_findAllBy()
     {
-        $videos = [$this->video, $this->video];
-        $paginatedVideos = new LengthAwarePaginator($videos, count($videos), 15);
+        $videos = $this->video->factory()->count(2)->mock();
 
-        $this->videoRepository
-            ->expects($this->once())
-            ->method('paginate')
-            ->with(15, ['*'])
-            ->willReturn($paginatedVideos);
+        $this->videoRepository->shouldReceive('findAllBy')->once()->andReturn($videos);
 
-        $result = $this->videoRepository->paginate(15);
-        $this->assertEquals($result, $paginatedVideos);
+        $this->assertEquals($videos, $this->videoRepository->findAllBy());
     }
 
-    public function testCreate()
+    public function test_findAllByWithColumns()
     {
-        $video = $this->video;
+        $videos = $this->video->factory()->count(2)->mock();
+        $columns = ['media_category_id' => $videos->raw()[0]['media_category_id']];
 
-        $this->videoRepository
-            ->expects($this->once())
-            ->method('create')
-            ->with($video->toArray())
-            ->willReturn($video);
+        $filteredVideos = array_filter($videos->raw(), function ($video) use ($columns) {
+            return $video['media_category_id'] === $columns['media_category_id'];
+        });
 
-        $createdVideo = $this->videoRepository->create($video->toArray());
-        $this->assertEquals($video, $createdVideo);
+        $this->videoRepository->shouldReceive('findAllBy')->once()->with($columns)->andReturn($filteredVideos);
+
+        $this->assertEquals($filteredVideos, $this->videoRepository->findAllBy($columns));
     }
 
-    public function testUpdate()
+    public function test_findById()
     {
-        $video = $this->video;
+        $video = $this->video->factory()->mock();
 
-        $this->videoRepository
-            ->expects($this->once())
-            ->method('update')
-            ->with($video->id, $video->toArray())
-            ->willReturn($video);
+        $this->videoRepository->shouldReceive('findById')->once()->andReturn($video);
 
-        $updatedVideo = $this->videoRepository->update($video->id, $video->toArray());
-        $this->assertEquals($video, $updatedVideo);
+        $this->assertEquals($video, $this->videoRepository->findById($video->raw()['id']));
     }
 
-    public function testDelete()
+    public function test_paginate()
     {
-        $video = $this->video;
+        $perPage = 15;
+        $videosCount = 2;
+        $videos = $this->video->factory()->count($videosCount)->mock();
+        $paginator = new LengthAwarePaginator($videos, $videosCount, $perPage);
+
+        $this->videoRepository->shouldReceive('paginate')->once()->andReturn($paginator);
+
+        $this->assertEquals($paginator, $this->videoRepository->paginate($perPage));
+    }
+
+    public function test_paginateWithColumns()
+    {
+        $perPage = 15;
+        $videosCount = 2;
+        $videos = $this->video->factory()->count($videosCount)->mock();
+        $columns = ['id', 'title'];
+
+        $filteredVideos = array_map(function ($video) use ($columns) {
+            return array_intersect_key($video, array_flip($columns));
+        }, $videos->raw());
+
+        $paginator = new LengthAwarePaginator($filteredVideos, $videosCount, $perPage);
+
+        $this->videoRepository->shouldReceive('paginate')->once()->with($perPage, $columns)->andReturn($paginator);
+
+        $this->assertEquals($paginator, $this->videoRepository->paginate($perPage, $columns));
+    }
+
+    public function test_create()
+    {
+        $video = $this->video->factory()->mock();
+
+        $this->videoRepository->shouldReceive('create')->once()->andReturn($video);
+
+        $this->assertEquals($video, $this->videoRepository->create($video->raw()));
+    }
+
+    public function test_update()
+    {
+        $video = $this->video->factory()->mock();
+        $updateVideo = ['title' => 'Updated Title'];
+        $updatedVideo = array_merge($video->raw(), $updateVideo);
+
+        $id = $video->raw()['id'];
 
         $this->videoRepository
-            ->expects($this->once())
-            ->method('delete')
-            ->with($video->id)
-            ->willReturn(true);
+            ->shouldReceive('update')
+            ->once()
+            ->with($id, $updateVideo)
+            ->andReturn($updatedVideo);
 
-        $videoDeleted = $this->videoRepository->delete($video->id);
-        $this->assertTrue($videoDeleted);
+        $this->assertEquals($updatedVideo, $this->videoRepository->update($id, $updateVideo));
+    }
+
+    public function test_delete()
+    {
+        $video = $this->video->factory()->mock();
+
+        $this->videoRepository->shouldReceive('delete')->once()->andReturn($video);
+
+        $this->assertEquals($video, $this->videoRepository->delete($video->raw()['id']));
     }
 }

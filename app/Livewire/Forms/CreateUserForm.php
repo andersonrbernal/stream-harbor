@@ -6,11 +6,11 @@ use Livewire\Form;
 
 class CreateUserForm extends Form
 {
-    public string $name;
-    public string $email;
-    public string $password;
-    public string $password_confirmation;
-    public $country_id;
+    public string $name = '';
+    public string $email = '';
+    public string $password = '';
+    public string $password_confirmation = '';
+    public $country_id = '';
 
     /**
      * Get the validation rules that apply to the request.
