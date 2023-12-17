@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
+    const CACHE_TIME = 60;
     protected VideoRepositoryInterface $videoRepository;
 
     /**
@@ -38,90 +39,42 @@ class HomeController extends Controller
     }
 
     /**
-     * Get the trending video.
+     * Retrieves the trending video.
      *
-     * @return \App\Models\Video
+     * @return mixed The trending video.
      */
     private function getTrendingVideo()
     {
-        return Cache::remember('trending_video', 60, fn () => $this->getTrendingVideoCallback());
+        return Cache::remember('trending_video', self::CACHE_TIME, fn () => $this->videoRepository->getTrendingVideo());
     }
 
     /**
-     * Get the trending video callback.
+     * Retrieves the most liked videos with pagination.
      *
-     * @return \App\Models\Video
-     */
-    private function getTrendingVideoCallback()
-    {
-        return Video::withCount('interactions as total_views')
-            ->withCount(['interactions as total_likes' => function ($query) {
-                $query->where('liked', true);
-            }])
-            ->orderByDesc('total_views')
-            ->orderByDesc('total_likes')
-            ->first();
-    }
-
-    /**
-     * Get the most liked videos with pagination.
-     *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return mixed The most liked videos with pagination.
      */
     private function getMostLikedVideosWithPagination()
     {
-        return Cache::remember('most_liked_videos', 60, fn () => $this->getMostLikedVideosWithPaginationCallback());
+        return Cache::remember('most_liked_videos', self::CACHE_TIME, fn () => $this->videoRepository->getMostLikedVideosWithPagination());
     }
 
     /**
-     * Get the most liked videos with pagination callback.
+     * Retrieves the most viewed videos with pagination.
      *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
-     */
-    private function getMostLikedVideosWithPaginationCallback()
-    {
-        return Video::withCount(['interactions as total_likes' => function ($query) {
-            $query->where('liked', true);
-        }])
-            ->paginate(8);
-    }
-
-    /**
-     * Get the most viewed videos with pagination.
-     *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return mixed The most viewed videos with pagination.
      */
     private function getMostViewedVideosWithPagination()
     {
-        return Cache::remember('most_viewed_videos', 60, fn () => $this->getMostViewedVideosWithPaginationCallback());
+        return Cache::remember('most_viewed_videos', self::CACHE_TIME, fn () => $this->videoRepository->getMostViewedVideosWithPagination());
     }
 
     /**
-     * Get the most viewed videos with pagination callback.
+     * Retrieves the trending videos.
      *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return mixed The trending videos.
      */
-
-    private function getMostViewedVideosWithPaginationCallback()
-    {
-        return Video::withCount(['interactions as total_views' => function ($query) {
-            $query->where('viewed', true);
-        }])
-            ->paginate(8);
-    }
-
     private function getTrendingVideos()
     {
-        return Cache::remember('trending_videos', 60, fn () => $this->getTrendingVideosCallback());
-    }
-
-    private function getTrendingVideosCallback()
-    {
-        return Video::withCount('interactions as total_views')
-            ->withCount(['interactions as total_likes' => function ($query) {
-                $query->where('liked', true);
-                $query->where('viewed', true);
-            }])
-            ->paginate(8);
+        return Cache::remember('trending_videos', self::CACHE_TIME, fn () => $this->videoRepository->getTrendingVideos());
     }
 }
