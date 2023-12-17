@@ -48,4 +48,41 @@ class VideoRepository implements VideoRepositoryInterface
     {
         return $this->video->where('id', $id)->delete();
     }
+
+    public function getTrendingVideo()
+    {
+        return $this->video->withCount('interactions as total_views')
+            ->withCount(['interactions as total_likes' => function ($query) {
+                $query->where('liked', true);
+                $query->where('viewed', true);
+            }])
+            ->orderByDesc('total_views')
+            ->orderByDesc('total_likes')
+            ->first();
+    }
+
+    public function getTrendingVideos($per_page = 8)
+    {
+        return $this->video
+            ->withCount('interactions as total_views')
+            ->withCount(['interactions as total_likes' => function ($query) {
+                $query->where('liked', true);
+                $query->where('viewed', true);
+            }])
+            ->paginate($per_page);
+    }
+
+    public function getMostLikedVideosWithPagination($per_page = 8)
+    {
+        return $this->video
+            ->withCount(['interactions as total_likes' => fn ($query) => $query->where('liked', true)])
+            ->paginate($per_page);
+    }
+
+    public function getMostViewedVideosWithPagination($per_page = 8)
+    {
+        return $this->video
+            ->withCount(['interactions as total_views' => fn ($query) => $query->where('viewed', true)])
+            ->paginate($per_page);
+    }
 }
