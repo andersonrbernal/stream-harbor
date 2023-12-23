@@ -27,7 +27,7 @@
             {{ __('pages/auth/login.email_input.label') }}
         </x-flowbite.input-label>
 
-        <x-flowbite.input wire:model='credentials.email' :id="__('pages/auth/login.attributes.email')" :placeholder="__('pages/auth/login.email_input.placeholder')" :error="$errors->has('email')" />
+        <x-flowbite.input wire:model='email' :id="__('pages/auth/login.attributes.email')" :placeholder="__('pages/auth/login.email_input.placeholder')" :error="$errors->has('email')" />
     </div>
 
     <div>
@@ -35,7 +35,13 @@
             {{ __('pages/auth/login.password_input.label') }}
         </x-flowbite.input-label>
 
-        <x-flowbite.input wire:model='credentials.password' :id="__('pages/auth/login.attributes.password')" :placeholder="__('pages/auth/login.password_input.placeholder')" type='password' />
+        <x-flowbite.input wire:model='password' :id="__('pages/auth/login.attributes.password')" :placeholder="__('pages/auth/login.password_input.placeholder')" type='password' />
+    </div>
+
+    <div class="flex justify-between items-center">
+        <x-flowbite.checkbox wire:model='remember_me' :id="__('pages/auth/login.attributes.remember_me')">
+            {{ __('pages/auth/login.remember_me_input.label') }}
+        </x-flowbite.checkbox>
     </div>
 
     <x-flowbite.button wire:loading.attr='disabled'>
