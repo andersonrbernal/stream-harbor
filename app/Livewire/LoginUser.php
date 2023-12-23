@@ -9,19 +9,20 @@ use Livewire\Component;
 
 class LoginUser extends Component
 {
-    public array $credentials = [
-        'email' => '',
-        'password' => '',
-    ];
+    public string $email = '';
+    public string $password = '';
+    public bool $remember_me = false;
 
     public function login()
     {
-        $userAuthenticated = Auth::attempt($this->credentials);
-        $data = ['locale' => app()->getLocale()];
+        $userAuthenticated = Auth::attempt([
+            'email' => $this->email,
+            'password' => $this->password,
+        ], $this->remember_me);
 
         if ($userAuthenticated) {
             request()->session()->regenerate();
-            return redirect()->route('index', $data);
+            return redirect()->route('index', ['locale' => app()->getLocale()]);
         }
 
         return session()->flash('message', __('pages/auth/login.form_error.credentials_error'));
