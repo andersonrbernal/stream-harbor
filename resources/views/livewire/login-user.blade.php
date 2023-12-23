@@ -42,6 +42,10 @@
         <x-flowbite.checkbox wire:model='remember_me' :id="__('pages/auth/login.attributes.remember_me')">
             {{ __('pages/auth/login.remember_me_input.label') }}
         </x-flowbite.checkbox>
+
+        <x-flowbite.link :href="route('auth.forgot-password', ['locale' => app()->getLocale()])" class="text-sm">
+            {{ __('pages/auth/login.forgot_password_link') }}
+        </x-flowbite.link>
     </div>
 
     <x-flowbite.button wire:loading.attr='disabled'>
