@@ -19,6 +19,7 @@ return [
     "remember_me_input" => [
         "label" => "Remember me",
     ],
+    "forgot_password_link" => "Forgot your password?",
     "form_button" => 'Sign in',
     'form_error' => [
         'credentials_error' => 'Incorrect email or password.',
