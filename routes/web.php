@@ -17,10 +17,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(["prefix" => "{locale}"], function () {
+    // Home
     Route::get('/', [HomeController::class, 'index'])->name('index');
-    Route::get('/auth/register', fn () => view('pages.auth.register', ['title' => 'Sign up']))->name('auth.register');
-    Route::get('/auth/login', fn () => view('pages.auth.login', ['title' => 'Sign in']))->name('auth.login');
 
+    // Authentication
+    Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
+        Route::get('/register', [AuthenticationController::class, 'register'])->name('register');
+        Route::get('/login', [AuthenticationController::class, 'login'])->name('login');
+        Route::get('/forgot-password', [AuthenticationController::class, 'forgotPassword'])->name('forgot-password');
+        Route::get('/reset-password/{token}', [AuthenticationController::class, 'resetPassword'])->name('reset-password');
+    });
+
+    // Videos
     Route::get('/video/{id}', [VideoController::class, 'show'])->name('videos.show');
 
     require __DIR__ . '/api.php';
