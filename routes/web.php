@@ -26,6 +26,7 @@ Route::group(["prefix" => "{locale}"], function () {
         Route::get('/login', [AuthenticationController::class, 'login'])->name('login');
         Route::get('/forgot-password', [AuthenticationController::class, 'forgotPassword'])->name('forgot-password');
         Route::get('/reset-password/{token}', [AuthenticationController::class, 'resetPassword'])->name('reset-password');
+        Route::get('/logout', [AuthenticationController::class, 'logout'])->name('logout');
     });
 
     // Videos
