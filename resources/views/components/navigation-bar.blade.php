@@ -16,9 +16,28 @@
                 <x-dark-theme-toggle />
 
                 @if ($user)
-                    @php $firstName = explode(' ', trim($user->name))[0]; @endphp
+                    <div id="{{ $avatarButtonId }}" type="button" data-dropdown-toggle="{{ $userDropdownId }}"
+                        data-dropdown-placement="bottom-start"
+                        class="w-10 h-10 rounded-full cursor-pointer relative inline-flex items-center justify-center overflow-hidden bg-gray-100 dark:bg-gray-600">
+                        <span class="font-medium uppercase text-gray-600 dark:text-gray-300">
+                            {{ $user->name[0] . $user->name[1] }}
+                        </span>
+                    </div>
 
-                    <x-flowbite.heading heading="h4"> {{ $firstName }} </x-flowbite.heading>
+                    <!-- Dropdown menu -->
+                    <div id="{{ $userDropdownId }}"
+                        class="z-50 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                        <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                            <div class="truncate">{{ $user->name }}</div>
+                            <div class="font-medium truncate">{{ $user->email }}</div>
+                        </div>
+                        <div class="py-2">
+                            <a href="{{ route('auth.logout', ['locale' => app()->getLocale()]) }}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                {{ __('components/navigation-bar.logout') }}
+                            </a>
+                        </div>
+                    </div>
                 @else
                     <x-flowbite.link :href="route('auth.login', ['locale' => app()->getLocale()])">
                         {{ __('components/navigation-bar.login_button') }}
