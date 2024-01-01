@@ -8,6 +8,7 @@ return [
         "password" => "senha",
         "password_confirmation" => "confirmação de senha",
         "country_id" => "país",
+        "profile_photo" => "foto de perfil",
     ],
     "name_input" => [
         "label" => "Nome Completo",
@@ -24,6 +25,11 @@ return [
     "password_confirmation_input" => [
         "label" => "Confirmar Senha",
         "placeholder" => "********",
+    ],
+    "profile_photo_input" => [
+        "label" => "Foto de Perfil",
+        "placeholder" => "Selecione uma foto",
+        "description" => "A foto deve estar no formato :values e não pode ser maior que 1MB.",
     ],
     "country" => [
         "label" => "País",
