@@ -16,12 +16,18 @@
                 <x-dark-theme-toggle />
 
                 @if ($user)
+                    <!-- Avatar button -->
                     <div id="{{ $avatarButtonId }}" type="button" data-dropdown-toggle="{{ $userDropdownId }}"
                         data-dropdown-placement="bottom-start"
                         class="w-10 h-10 rounded-full cursor-pointer relative inline-flex items-center justify-center overflow-hidden bg-gray-100 dark:bg-gray-600">
-                        <span class="font-medium uppercase text-gray-600 dark:text-gray-300">
-                            {{ $user->name[0] . $user->name[1] }}
-                        </span>
+                        @if ($user->profile_photo)
+                            <img class="rounded-full w-10 h-10 object-cover"
+                                src="{{ asset('/storage/' . $user->profile_photo) }}" alt="{{ $user->name }}" />
+                        @else
+                            <span class="font-medium uppercase text-gray-600 dark:text-gray-300">
+                                {{ $user->name[0] . $user->name[1] }}
+                            </span>
+                        @endif
                     </div>
 
                     <!-- Dropdown menu -->
