@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\View\View;
@@ -11,7 +12,7 @@ use Illuminate\View\Component;
 
 class NavigationBar extends Component
 {
-    protected Authenticatable|null $user;
+    protected Authenticatable|User|null $user;
     protected $userDropdownId;
     protected $avatarButtonId;
 
