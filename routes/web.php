@@ -21,13 +21,13 @@ Route::group(["prefix" => "{locale}"], function () {
     Route::get('/', [HomeController::class, 'index'])->name('index');
 
     // Authentication
-    Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
+    Route::group(['prefix' => 'auth', 'as' => 'auth.', 'middleware' => ['guest']], function () {
         Route::get('/register', [AuthenticationController::class, 'register'])->name('register');
         Route::get('/login', [AuthenticationController::class, 'login'])->name('login');
         Route::get('/forgot-password', [AuthenticationController::class, 'forgotPassword'])->name('forgot-password');
         Route::get('/reset-password/{token}', [AuthenticationController::class, 'resetPassword'])->name('reset-password');
         Route::get('/logout', [AuthenticationController::class, 'logout'])->name('logout');
-    });
+    })->middleware('guest');
 
     // Videos
     Route::get('/video/{id}', [VideoController::class, 'show'])->name('videos.show');
