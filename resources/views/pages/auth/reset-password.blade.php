@@ -1,7 +1,6 @@
-<x-layouts.app :title="$title" class="bg-gray-700 bg-auto bg-no-repeat">
-
-    <img src={{ asset('assets/images/background-image.png') }} alt="Background Image"
-        class="absolute -z-50 object-cover w-full h-screen overflow-hidden">
+<x-layouts.app :title="$title"
+    class="bg-gray-700 bg-no-repeat bg-fixed bg-center bg-cover scroll-smooth
+    bg-[url('{{ asset('assets/images/background-image.png') }}')]">
 
     <div class="max-w-md w-full mx-auto">
         <div class="mx-5">
