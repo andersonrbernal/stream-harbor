@@ -29,7 +29,6 @@
     {{ $slot }}
 
     <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
-    <script src="//unpkg.com/alpinejs" defer></script>
     @livewireScripts
     @stack('scripts')
 </body>
