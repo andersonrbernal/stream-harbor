@@ -1,4 +1,4 @@
-<form wire:submit.prevent='save'
+<form wire:submit='save'
     class="p-8 space-y-4 md:space-y-6 border border-gray-200 rounded-lg shadow bg-gray-100 dark:bg-gray-800 dark:border-gray-700">
 
     <h1 class="font-semibold text-xl text-gray-500 dark:text-gray-400">
@@ -40,7 +40,7 @@
                     </p>
                 </div> @endif
 
-            <input wire:model='form.profile_photo' id="{{ __('pages/auth/register.attributes.profile_photo') }}"
+            <input wire:model.live='form.profile_photo' id="{{ __('pages/auth/register.attributes.profile_photo') }}"
             type="file" class="hidden" wire:error.class='display' accept="{{ $profile_photo_allowed_extensions }}" />
         </label>
     </div>
@@ -111,7 +111,7 @@
             {{ __('pages/auth/register.country.label') }}
         </x-flowbite.input-label>
 
-        <x-flowbite.select wire:model.lazy='form.country_id' :id="__('pages/auth/register.attributes.country_id')">
+        <x-flowbite.select wire:model.blur='form.country_id' :id="__('pages/auth/register.attributes.country_id')">
 
             <option value="-1">{{ __('pages/auth/register.country.placeholder') }}</option>
 
@@ -129,7 +129,7 @@
     </div>
 
     {{-- Submit Button --}}
-    <x-flowbite.button wire:submit.prevent='save' wire:loading.attr='disabled'>
+    <x-flowbite.button wire:submit='save' wire:loading.attr='disabled'>
         <span wire:loading.remove wire:target='save'> {{ __('pages/auth/register.form_button') }} </span>
         <i wire:loading wire:target='save' class="fa-solid fa-spinner animate-spin text-lg text-primary-200"></i>
     </x-flowbite.button>
