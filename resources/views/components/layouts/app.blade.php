@@ -24,7 +24,7 @@
 </head>
 
 <body x-cloak x-data="{ darkMode: $persist(false) }" :class="{ 'dark': darkMode === true }" {{ $attributes }}>
-    <x-navigation-bar />
+    <livewire:navigation-bar />
 
     {{ $slot }}
 

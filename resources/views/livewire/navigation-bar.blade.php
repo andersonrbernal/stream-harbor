@@ -5,7 +5,7 @@
             class="flex gap-2">
             <img src="{{ asset('favicon.svg') }}" alt="{{ __('pages/auth/register.title') }}" class="w-8 h-8">
             <h1 class="text-lg text-gray-500 md:text-xl dark:text-gray-400">
-                {{ __('components/navigation-bar.title') }}
+                {{ __('components/livewire/navigation-bar.title') }}
             </h1>
         </a>
 
@@ -38,18 +38,24 @@
                             <div class="font-medium truncate">{{ $user->email }}</div>
                         </div>
                         <div class="py-2">
+                            <a href="{{ route('user.profile', ['locale' => app()->getLocale()]) }}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                {{ __('components/livewire/navigation-bar.profile') }}
+                            </a>
+                        </div>
+                        <div class="py-2">
                             <a href="{{ route('auth.logout', ['locale' => app()->getLocale()]) }}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                                {{ __('components/navigation-bar.logout') }}
+                                {{ __('components/livewire/navigation-bar.logout') }}
                             </a>
                         </div>
                     </div>
                 @else
                     <x-flowbite.link :href="route('auth.login', ['locale' => app()->getLocale()])">
-                        {{ __('components/navigation-bar.login_button') }}
+                        {{ __('components/livewire/navigation-bar.login_button') }}
                     </x-flowbite.link>
                     <x-flowbite.button-link :href="route('auth.register', ['locale' => app()->getLocale()])">
-                        {{ __('components/navigation-bar.sign_up_button') }}
+                        {{ __('components/livewire/navigation-bar.sign_up_button') }}
                     </x-flowbite.button-link>
                 @endif
 
