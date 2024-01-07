@@ -48,7 +48,7 @@ class CreateUser extends Component
         }
     }
 
-    public function generateProfilePhotoName(UploadedFile $uploadedFile)
+    public static function generateProfilePhotoName(UploadedFile $uploadedFile)
     {
         return $uploadedFile->getClientOriginalName() . '-' . time() . '.' . $uploadedFile->extension();
     }
