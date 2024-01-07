@@ -89,7 +89,7 @@ class ResetPasswordUser extends Component
 
     public function redirectEvent(string $url, int $timeout = 3000)
     {
-        $this->dispatchBrowserEvent('redirect', ['url' => $url, 'timeout' => $timeout]);
+        $this->dispatch('redirect', ['url' => $url, 'timeout' => $timeout]);
     }
 
     public function render()
