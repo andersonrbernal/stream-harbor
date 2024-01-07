@@ -1,4 +1,4 @@
-<form wire:submit.prevent='resetPassword'
+<form wire:submit='resetPassword'
     class="p-8 space-y-4 md:space-y-6 border border-gray-200 rounded-lg shadow bg-gray-100 dark:bg-gray-800 dark:border-gray-700">
 
     <h1 class="text-2xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white">
