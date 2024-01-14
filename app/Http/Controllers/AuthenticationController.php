@@ -27,6 +27,12 @@ class AuthenticationController extends Controller
         return view('pages.auth.login', ['title' => __('pages/auth/login.title')]);
     }
 
+    public function logout()
+    {
+        auth()->logout();
+        return redirect()->route('index', ['locale' => app()->getLocale()]);
+    }
+
     public function forgotPassword()
     {
         return view('pages.auth.forgot-password', ['title' => __('pages/auth/forgot-password.title')]);

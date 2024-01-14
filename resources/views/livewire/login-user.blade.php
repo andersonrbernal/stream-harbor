@@ -1,4 +1,4 @@
-<form wire:submit.prevent='login'
+<form wire:submit='login'
     class="p-8 space-y-4 md:space-y-6 border border-gray-200 rounded-lg shadow bg-gray-100 dark:bg-gray-800 dark:border-gray-700">
 
     <h1 class="font-semibold text-xl text-gray-500 dark:text-gray-400">
@@ -27,7 +27,7 @@
             {{ __('pages/auth/login.email_input.label') }}
         </x-flowbite.input-label>
 
-        <x-flowbite.input wire:model='email' :id="__('pages/auth/login.attributes.email')" :placeholder="__('pages/auth/login.email_input.placeholder')" :error="$errors->has('email')" />
+        <x-flowbite.input wire:model.live='email' :id="__('pages/auth/login.attributes.email')" :placeholder="__('pages/auth/login.email_input.placeholder')" :error="$errors->has('email')" />
     </div>
 
     <div>
@@ -35,11 +35,11 @@
             {{ __('pages/auth/login.password_input.label') }}
         </x-flowbite.input-label>
 
-        <x-flowbite.input wire:model='password' :id="__('pages/auth/login.attributes.password')" :placeholder="__('pages/auth/login.password_input.placeholder')" type='password' />
+        <x-flowbite.input wire:model.live='password' :id="__('pages/auth/login.attributes.password')" :placeholder="__('pages/auth/login.password_input.placeholder')" type='password' />
     </div>
 
     <div class="flex justify-between items-center">
-        <x-flowbite.checkbox wire:model='remember_me' :id="__('pages/auth/login.attributes.remember_me')">
+        <x-flowbite.checkbox wire:model.live='remember_me' :id="__('pages/auth/login.attributes.remember_me')">
             {{ __('pages/auth/login.remember_me_input.label') }}
         </x-flowbite.checkbox>
 

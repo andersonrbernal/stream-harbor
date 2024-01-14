@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VideoController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,7 +28,13 @@ Route::group(["prefix" => "{locale}"], function () {
         Route::get('/login', [AuthenticationController::class, 'login'])->name('login');
         Route::get('/forgot-password', [AuthenticationController::class, 'forgotPassword'])->name('forgot-password');
         Route::get('/reset-password/{token}', [AuthenticationController::class, 'resetPassword'])->name('reset-password');
+        Route::get('/logout', [AuthenticationController::class, 'logout'])->name('logout');
     });
+
+    // User
+    Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => ['auth']], function () {
+        Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+    })->middleware('auth');
 
     // Videos
     Route::get('/video/{id}', [VideoController::class, 'show'])->name('videos.show');

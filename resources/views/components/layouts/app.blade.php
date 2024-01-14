@@ -24,12 +24,11 @@
 </head>
 
 <body x-cloak x-data="{ darkMode: $persist(false) }" :class="{ 'dark': darkMode === true }" {{ $attributes }}>
-    <x-navigation-bar />
+    <livewire:navigation-bar />
 
     {{ $slot }}
 
     <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
-    <script src="//unpkg.com/alpinejs" defer></script>
     @livewireScripts
     @stack('scripts')
 </body>

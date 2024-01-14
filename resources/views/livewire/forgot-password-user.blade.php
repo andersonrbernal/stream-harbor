@@ -1,4 +1,4 @@
-<form wire:submit.prevent="sendEmail"
+<form wire:submit="sendEmail"
     class="p-8 space-y-4 md:space-y-6 border border-gray-200 rounded-lg shadow bg-gray-100 dark:bg-gray-800 dark:border-gray-700">
 
     <h1 class="font-semibold text-xl text-gray-500 dark:text-gray-400">
@@ -26,7 +26,7 @@
             {{ __('pages/auth/forgot-password.email_input.label') }}
         </x-flowbite.input-label>
 
-        <x-flowbite.input wire:model='form.email' :id="__('pages/auth/forgot-password.attributes.email')" :placeholder="__('pages/auth/forgot-password.email_input.placeholder')" :error="$errors->has('form.email')" />
+        <x-flowbite.input wire:model.live='form.email' :id="__('pages/auth/forgot-password.attributes.email')" :placeholder="__('pages/auth/forgot-password.email_input.placeholder')" :error="$errors->has('form.email')" />
 
         @error('form.email')
             <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
